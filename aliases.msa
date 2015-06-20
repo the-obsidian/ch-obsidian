@@ -1,18 +1,22 @@
+# Help / Rules / Vote Messages
 
-obsidian.premium.workbench:/workbench = pworkbench()
-/wb = /workbench
-
-obsidian.premium.backpack:/backpack = show_enderchest()
-/bp = /backpack
-
-*:/pinv $p = >>>
-  @player = _fuzzy_find_player($p)
-  if (!@player) {
-    die(colorize('&cPlayer not found'))
-  }
-
-  msg(get_inventory(pinfo(@player, 13)))
+/help = >>>
+  msg(colorize('&9Need help?  Visit &3http://the-obsidian.com/help/'))
 <<<
+
+*:/rules = >>>
+  msg(colorize('&9Please see the website for the guidelines: &3http://the-obsidian.com/guidelines/'))
+<<<
+
+*:/vote = >>>
+  msg(colorize('&6VOTE: &fHelp support the server!  Vote for us here:'))
+  msg(colorize('&7- &3http://minecraftservers.org/server/237389'))
+  msg(colorize('&7- &3http://www.minestatus.net/132032-the-obsidian'))
+  msg(colorize('&7- &3http://www.mineservers.net/servers/5976'))
+  msg(colorize('&7- &3http://www.planetminecraft.com/server/the-obsidian/'))
+<<<
+
+# Common Commands
 
 *:/cleanroom = >>>
   @player = player()
@@ -33,122 +37,6 @@ obsidian.premium.backpack:/backpack = show_enderchest()
     set_ploc(get_value(@player, 'creativeDestination'))
   } else {
     msg(colorize('&cYou can only enter from the overworld!'))
-  }
-<<<
-
-*:/seen $p = >>>
-  @player = _fuzzy_find_player($p)
-
-  if (!@player) {
-    die(colorize('&cPlayer not found!'))
-  }
-
-  @time = plast_played(@player)
-
-  if (@time == 0) {
-    die(colorize('&cThat player has not logged in yet.'))
-  }
-
-  @date = simple_date('MMMM d, YYYY, K:mm a, z', @time, 'EST')
-
-  msg(colorize(@player . ' was last seen at ' . @date))
-<<<
-
-server.carnival:/carnival = >>>
-  assign(@ap, all_players('world'))
-  for(assign(@i, 0), lt(@i, array_size(@ap)), assign(@i, add(@i, 1)),
-    set_peffect(array_get(@ap, @i), 8, 1, 300)
-  )
-<<<
-
-server.fireworks:/fireworks = >>>
-  assign(@ap, all_players('world'))
-
-  assign(@options, array(
-    'colors': 'RED|GREEN|BLUE',
-    'flicker': true,
-    'trail': true,
-    'type': 'BALL_LARGE'
-  ))
-  for(assign(@i, 0), lt(@i, 20), assign(@i, add(@i, 1)),
-    for(assign(@j, 0), lt(@j, array_size(@ap)), assign(@j, add(@j, 1)),
-      queue_push(closure(
-        assign(@location, pinfo(array_get(@ap, @j))[1])
-        assign(@location[0], add(@location[0],rand(-20, 20)))
-        assign(@location[2], add(@location[2], rand(-20, 20)))
-        assign(@location[3], pinfo(array_get(@ap, @j))[7])
-        launch_firework(@location, @options)
-      ))
-    )
-    queue_delay(1000)
-  )
-<<<
-
-/help = >>>
-  msg(colorize('&9Need help?  Visit &3http://the-obsidian.com/help/'))
-<<<
-
-*:/rules = >>>
-  msg(colorize('&9Please see the website for the guidelines: &3http://the-obsidian.com/guidelines/'))
-<<<
-
-*:/bmessage = _bmessage()
-
-server.cake:/cake $1 = >>>
-  @players = all_players()
-  foreach(@player in @players) {
-    @id = pinfo(@player, 13)
-    @meta = array(
-      'display': 'Cake!',
-      'lore': 'From ' . $1
-    )
-    add_to_inventory(@id, 354, 1, @meta)
-  }
-<<<
-
-obsidian.admin:/sleep = >>>
-  @world = pworld()
-  if (@world != 'world') {
-    die(colorize('&cYou can only sleep in the overworld!'))
-  }
-
-  @time = get_world_time()
-  if (@time < 12541 || @time >23458) {
-    die(colorize('&cYou can only sleep at night!'))
-  }
-
-  @player = player()
-  @prefix = _player_prefix(@player)
-  broadcast(colorize('&6SLEEP: '.@prefix.@player.' has initiated server sleep in 10 seconds'))
-  broadcast(colorize('&aUse /nosleep to cancel'))
-  store_value('sleepOK', true)
-
-  set_timeout(10000, closure(
-    if (get_value('sleepOK')) {
-      set_world_time('world', 23000)
-      broadcast(colorize('&6SLEEP: sleep successful!'))
-    }
-    clear_value('sleepOK')
-  ))
-<<<
-
-obsidian.admin:/nosleep = >>>
-  if (get_value('sleepOK')) {
-    clear_value('sleepOK')
-    @player = player()
-    @prefix = _player_prefix(@player)
-    broadcast(colorize('&6SLEEP: '.@prefix.@player.' cancelled server sleep'))
-  } else {
-    msg(colorize('&cThere is no pending sleep request!'))
-  }
-<<<
-
-*:/slimes = >>>
-  @loc = ploc()
-  if (is_slime_chunk(integer(@loc['x']), integer(@loc['z']))) {
-    msg(colorize('&6This is a slime chunk'))
-  } else {
-    msg(colorize('&6This is not a slime chunk'))
   }
 <<<
 
@@ -187,10 +75,131 @@ obsidian.admin:/nosleep = >>>
   }
 <<<
 
-*:/vote = >>>
-  msg(colorize('&6VOTE: &fHelp support the server!  Vote for us here:'))
-  msg(colorize('&7- &3http://minecraftservers.org/server/237389'))
-  msg(colorize('&7- &3http://www.minestatus.net/132032-the-obsidian'))
-  msg(colorize('&7- &3http://www.mineservers.net/servers/5976'))
-  msg(colorize('&7- &3http://www.planetminecraft.com/server/the-obsidian/'))
+*:/seen $p = >>>
+  @player = _fuzzy_find_player($p)
+
+  if (!@player) {
+    die(colorize('&cPlayer not found!'))
+  }
+
+  @time = plast_played(@player)
+
+  if (@time == 0) {
+    die(colorize('&cThat player has not logged in yet.'))
+  }
+
+  @date = simple_date('MMMM d, YYYY, K:mm a, z', @time, 'EST')
+
+  msg(colorize(@player . ' was last seen at ' . @date))
+<<<
+
+*:/slimes = >>>
+  @loc = ploc()
+  if (is_slime_chunk(integer(@loc['x']), integer(@loc['z']))) {
+    msg(colorize('&6This is a slime chunk'))
+  } else {
+    msg(colorize('&6This is not a slime chunk'))
+  }
+<<<
+
+# Premium Commands
+
+obsidian.premium.workbench:/workbench = pworkbench()
+/wb = /workbench
+
+obsidian.premium.backpack:/backpack = show_enderchest()
+/bp = /backpack
+
+# Debug Commands
+
+obsidian.admin:/pinv $p = >>>
+  @player = _fuzzy_find_player($p)
+  if (!@player) {
+    die(colorize('&cPlayer not found'))
+  }
+
+  msg(get_inventory(pinfo(@player, 13)))
+<<<
+
+obsidian.admin:/bmessage = _bmessage()
+
+obsidian.admin:/sleep = >>>
+  @world = pworld()
+  if (@world != 'world') {
+    die(colorize('&cYou can only sleep in the overworld!'))
+  }
+
+  @time = get_world_time()
+  if (@time < 12541 || @time >23458) {
+    die(colorize('&cYou can only sleep at night!'))
+  }
+
+  @player = player()
+  @prefix = _player_prefix(@player)
+  broadcast(colorize('&6SLEEP: '.@prefix.@player.' has initiated server sleep in 10 seconds'))
+  broadcast(colorize('&aUse /nosleep to cancel'))
+  store_value('sleepOK', true)
+
+  set_timeout(10000, closure(
+    if (get_value('sleepOK')) {
+      set_world_time('world', 23000)
+      broadcast(colorize('&6SLEEP: sleep successful!'))
+    }
+    clear_value('sleepOK')
+  ))
+<<<
+
+obsidian.admin:/nosleep = >>>
+  if (get_value('sleepOK')) {
+    clear_value('sleepOK')
+    @player = player()
+    @prefix = _player_prefix(@player)
+    broadcast(colorize('&6SLEEP: '.@prefix.@player.' cancelled server sleep'))
+  } else {
+    msg(colorize('&cThere is no pending sleep request!'))
+  }
+<<<
+
+# Buycraft Commands
+
+server.carnival:/carnival = >>>
+  @ap = all_players('world')
+  foreach(@p in @ap) {
+    set_peffect(@p, 8, 1, 300)
+  }
+<<<
+
+server.fireworks:/fireworks = >>>
+  @ap = all_players('world')
+
+  @options = array(
+    'colors': 'RED|GREEN|BLUE',
+    'flicker': true,
+    'trail': true,
+    'type': 'BALL_LARGE'
+  )
+  for(@i = 0, @i < 20, @i = @i + 1) {
+    for(@j = 0, @j < array_size(@ap), @j = @j + 1) {
+      queue_push(closure() {
+        @location = pinfo(array_get(@ap, @j))[1]
+        @location[0] = @location[0] + rand(-20, 20)
+        @location[2] = @location[2] + rand(-20, 20)
+        @location[3] = pinfo(array_get(@ap, @j))[7]
+        launch_firework(@location, @options)
+      })
+    }
+    queue_delay(1000)
+  }
+<<<
+
+server.cake:/cake $1 = >>>
+  @players = all_players()
+  foreach(@player in @players) {
+    @id = pinfo(@player, 13)
+    @meta = array(
+      'display': 'Cake!',
+      'lore': 'From ' . $1
+    )
+    add_to_inventory(@id, 354, 1, @meta)
+  }
 <<<

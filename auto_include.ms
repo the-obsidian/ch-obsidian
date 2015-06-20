@@ -1,10 +1,10 @@
-proc(_player_prefix, @player,
+proc(_player_prefix, @player) {
   return(_group_prefix(pgroup(@player)[0]))
-)
+}
 
-proc(_player_prefix_short, @player,
+proc(_player_prefix_short, @player) {
   return(_group_prefix_short(pgroup(@player)[0]))
-)
+}
 
 proc(_fuzzy_find_player, @pattern) {
   @player = false
@@ -17,7 +17,7 @@ proc(_fuzzy_find_player, @pattern) {
   return(@player)
 }
 
-proc(_bmessage,
+proc(_bmessage) {
   broadcast('')
   broadcast(colorize('&6Announcements:'))
   broadcast(colorize('  &3New Spawn Open! Details and rules:'))
@@ -29,9 +29,9 @@ proc(_bmessage,
   broadcast(colorize('  &3TeamSpeak: &2ts.the-obsidian.com &f(pw: thetspassword)'))
   broadcast(colorize('  &3Forum:       &2http://forum.the-obsidian.com'))
   broadcast('')
-)
+}
 
-proc(_group_prefix_short, @group,
+proc(_group_prefix_short, @group) {
   switch(@group) {
     case 'admin':
     case 'operator':
@@ -45,11 +45,11 @@ proc(_group_prefix_short, @group,
     case 'premium':
       return(color('6').'✸ ')
     default:
-return('')
+      return('')
   }
-)
+}
 
-proc(_group_prefix, @group,
+proc(_group_prefix, @group) {
   switch(@group) {
     case 'admin':
     case 'operator':
@@ -65,4 +65,4 @@ proc(_group_prefix, @group,
     default:
       return('')
   }
-)
+}

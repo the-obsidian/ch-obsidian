@@ -1,5 +1,4 @@
-assign(@server_name, 'The Obsidian')
-
+# Set up teams for prefixes
 try(create_team('member'), @ex, , array(ScoreboardException))
 try(create_team('premium'), @ex, , array(ScoreboardException))
 try(create_team('guardian'), @ex, , array(ScoreboardException))
@@ -8,6 +7,7 @@ try(create_team('community'), @ex, , array(ScoreboardException))
 try(create_team('operator'), @ex, , array(ScoreboardException))
 try(create_team('admin'), @ex, , array(ScoreboardException))
 
+# Set up team display names
 set_team_display('member', array('prefix': _group_prefix('member'), 'suffix': ''))
 set_team_display('premium', array('prefix': _group_prefix('premium'), 'suffix': ''))
 set_team_display('guardian', array('prefix': _group_prefix('guardian'), 'suffix': ''))
@@ -21,8 +21,9 @@ set_interval(1500000, closure() {
   _bmessage()
 })
 
-bind(player_join, null, null, @event, @server_name,
-  assign(@player, @event[player])
+# Customize player joins
+bind(player_join, null, null, @event) {
+  @player = @event[player]
 
   # Welcome the player
   runas('~console', '/title '.@player.' subtitle {text:"Welcome '.@player.'",color:yellow}')
@@ -32,7 +33,7 @@ bind(player_join, null, null, @event, @server_name,
   modify_event('join_message', _player_prefix(@player).@player.color('f').' joined')
 
   # Send MOTD
-  tmsg(@player, colorize('Welcome to &6'.@server_name.'&f [&cthe-obsidian.com&f]'))
+  tmsg(@player, colorize('Welcome to &6The Obsidian&f [&cthe-obsidian.com&f]'))
   tmsg(@player, colorize('    TeamSpeak: &9ts.the-obsidian.com (pw: thetspassword)'))
   tmsg(@player, colorize('    Forum:     &9http://forum.the-obsidian.com'))
 
@@ -53,9 +54,10 @@ bind(player_join, null, null, @event, @server_name,
   } else {
     msg(concat(color(green), 'You have new mail! Type /mail read to see your messages.'))
   }
-)
+}
 
-bind(player_quit, null, null, @event,
-  assign(@player, @event[player])
+# Customize player quits
+bind(player_quit, null, null, @event) {
+  @player = @event[player]
   modify_event('message', _player_prefix(@player).@player.color('f').' left')
-)
+}
