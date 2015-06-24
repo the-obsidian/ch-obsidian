@@ -18,12 +18,12 @@ proc(_fuzzy_find_player, @pattern) {
 }
 
 proc(_bmessage) {
-  broadcast('')
-  broadcast(colorize('&6Announcements:'))
-  broadcast(colorize('  &3New Spawn Open! Details and rules:'))
-  broadcast(colorize('    &2http://forum.the-obsidian.com/t/t/43'))
-  broadcast(colorize('  &3Staff Spotlight #0: Introduction:'))
-  broadcast(colorize('    &2http://forum.the-obsidian.com/t/t/44'))
+  # broadcast('')
+  # broadcast(colorize('&6Announcements:'))
+  # broadcast(colorize('  &3New Spawn Open! Details and rules:'))
+  # broadcast(colorize('    &2http://forum.the-obsidian.com/t/t/43'))
+  # broadcast(colorize('  &3Staff Spotlight #0: Introduction:'))
+  # broadcast(colorize('    &2http://forum.the-obsidian.com/t/t/44'))
   broadcast('')
   broadcast(colorize('&6Links:'))
   broadcast(colorize('  &3TeamSpeak: &2ts.the-obsidian.com &f(pw: thetspassword)'))
