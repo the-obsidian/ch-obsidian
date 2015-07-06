@@ -31,6 +31,10 @@ proc(_bmessage) {
   broadcast('')
 }
 
+proc(_tellraw, @target, @message) {
+  sudo('/tellraw '.@target.' '.json_encode(@message))
+}
+
 proc(_group_prefix_short, @group) {
   switch(@group) {
     case 'admin':
@@ -65,4 +69,46 @@ proc(_group_prefix, @group) {
     default:
       return('')
   }
+}
+
+proc(_group_hover_event, @group) {
+  switch(@group) {
+    case 'admin':
+    case 'operator':
+      return(array(action: 'show_text', value: array(text: 'Operator - keeps the server running')))
+    case 'premiumguardian':
+    case 'guardian':
+      return(array(action: 'show_text', value: array(text: 'Guardian - welcomes new players, helps around the server, enforces the rules')))
+    case 'community':
+      return(array(action: 'show_text', value: array(text: 'Community Builder - coordinates events, advertising, and promotions')))
+    case 'premium':
+      return(array(action: 'show_text', value: array(text: 'Premium - has donated to keep the server running!')))
+  }
+}
+
+proc(_player_name_json, @player) {
+  @group = pgroup(@player)[0]
+  @text = array("")
+
+  switch(@group) {
+    case 'admin':
+    case 'operator':
+      @text[] = array(text: '[OP] ', color: 'dark_aqua', hoverEvent: _group_hover_event('operator'))
+      @text[] = @player
+    case 'premiumguardian':
+      @text[] = array(text: '[Guardian] ', color: 'dark_green', hoverEvent: _group_hover_event('guardian'))
+      @text[] = array(text: '✸ '. @player, color: 'gold')
+    case 'guardian':
+      @text[] = array(text: '[Guardian] ', color: 'dark_green', hoverEvent: _group_hover_event('guardian'))
+      @text[] = @player
+    case 'community':
+      @text[] = array(text: '[Community] ', color: 'yellow', hoverEvent: _group_hover_event('community'))
+      @text[] = @player
+    case 'premium':
+      @text[] = array(text: '✸ '. @player, color: 'gold', hoverEvent: _group_hover_event('premium'))
+    default:
+      @text[] = @player
+  }
+
+  return(@text)
 }
