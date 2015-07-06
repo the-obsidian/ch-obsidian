@@ -73,3 +73,22 @@ bind(player_quit, null, null, @event) {
 #  _tellraw('@a', @text)
 #  cancel()
 #}
+
+bind(player_portal_travel, null, null, @event) {
+  @type = _portal_type(@event[from])
+  @from = @event[from]
+  @world = @from['world']
+
+  switch(@world) {
+    case 'world':
+      if (@type == 'district12') {
+        @from['world'] = 'district12'
+        modify_event('to', @from)
+      }
+    case 'district12':
+      @from['world'] = 'world'
+      modify_event('to', @from)
+    case 'cleanroom':
+      cancel()
+  }
+}

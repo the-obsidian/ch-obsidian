@@ -27,7 +27,7 @@
     msg(colorize('&aReturning to the overworld'))
     store_value(@player, 'creativeDestination', @location)
     set_ploc(get_value(@player, 'creativeReturn'))
-  } else if (@world == 'world') {
+  } else if (@world == 'world' || @world == 'district12') {
     msg(colorize('&aEntering creative cleanroom'))
     msg(colorize('&bUse /cleanroom again to return to the overworld'))
     store_value(@player, 'creativeReturn', @location)
