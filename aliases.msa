@@ -75,6 +75,14 @@
   }
 <<<
 
+*:/irongolem = >>>
+  if (pworld() != 'test_world') {
+    die(colorize('&cYou are not in the cleanroom!'))
+  }
+
+  spawn_entity(IRON_GOLEM, 1)
+<<<
+
 *:/seen $p = >>>
   @player = _fuzzy_find_player($p)
 
