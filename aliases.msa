@@ -194,6 +194,10 @@ obsidian.admin:/head $name = >>>
   pgive_item(player(), '397:3', 1, array(owner: $name))
 <<<
 
+obsidian.admin:/pinv = >>>
+  msg(pinv())
+<<<
+
 # Buycraft Commands
 
 server.carnival:/carnival = >>>
