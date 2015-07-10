@@ -190,6 +190,10 @@ obsidian.admin:/nosleep = >>>
   }
 <<<
 
+obsidian.admin:/head $name = >>>
+  pgive_item(player(), '397:3', 1, array(owner: $name))
+<<<
+
 # Buycraft Commands
 
 server.carnival:/carnival = >>>
