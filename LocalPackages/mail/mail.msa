@@ -1,0 +1,35 @@
+
+*:/mail [$action] [$] = >>>
+  if($action == 'read') {
+    if (get_value(concat('mail', player())) == null) {
+      msg(concat(color(green), 'No new mail.'))
+    } else {
+      msg(concat(color(green), get_value(concat('mail', player()))))
+      clear_value(concat('mail', player()))
+      msg(concat(color(green), 'Your mail has been marked as read.'))
+    }
+  } else {
+    if ($ == '') {
+      msg(concat(color(red), 'Usage: /mail <player> <message>'))
+      msg(concat(color(red), 'To see your mail, do /mail read'))
+    } else {
+      @player = _fuzzy_find_player($action)
+
+      if (@player) {
+        if (ponline(@player)) {
+          tmsg(@player, concat(color(green), 'New mail message. Type /mail read to see your messages.'))
+        }
+
+        if (get_value(concat('mail', @player)) == null) {
+          store_value(concat('mail', @player), concat(concat(' ', player()), concat(': ', $)))
+        } else {
+          store_value(concat('mail', @player), concat(get_value(concat('mail', @player)), concat(concat('\n', player()), concat(': ', $))))
+        }
+
+        msg(concat(color(green), 'Mail message sent to '.@player))
+      } else {
+        msg(concat(color(red), 'Player not found'))
+      }
+    }
+  }
+<<<

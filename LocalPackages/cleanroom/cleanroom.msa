@@ -1,0 +1,29 @@
+*:/cleanroom = >>>
+  @player = player()
+  @world = pworld()
+  @location = ploc()
+
+  if (@world == 'test_world') {
+    msg(colorize('&aReturning to the overworld'))
+    store_value(@player, 'creativeDestination', @location)
+    set_ploc(get_value(@player, 'creativeReturn'))
+  } else if (@world == 'world' || @world == 'district12') {
+    msg(colorize('&aEntering creative cleanroom'))
+    msg(colorize('&bUse /cleanroom again to return to the overworld'))
+    store_value(@player, 'creativeReturn', @location)
+    if (!has_value(@player, 'creativeDestination')) {
+      store_value(@player, 'creativeDestination', get_spawn('test_world'))
+    }
+    set_ploc(get_value(@player, 'creativeDestination'))
+  } else {
+    msg(colorize('&cYou can only enter from the overworld!'))
+  }
+<<<
+
+*:/irongolem = >>>
+  if (pworld() != 'test_world') {
+    die(colorize('&cYou are not in the cleanroom!'))
+  }
+
+  spawn_entity(IRON_GOLEM, 1)
+<<<

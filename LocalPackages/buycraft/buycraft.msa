@@ -1,0 +1,41 @@
+server.carnival:/carnival = >>>
+  @ap = all_players('world')
+  foreach(@p in @ap) {
+    set_peffect(@p, 8, 1, 300)
+  }
+<<<
+
+server.fireworks:/fireworks = >>>
+  @ap = all_players('world')
+
+  @options = array(
+    'colors': 'RED|GREEN|BLUE',
+    'flicker': true,
+    'trail': true,
+    'type': 'BALL_LARGE'
+  )
+  for(@i = 0, @i < 20, @i = @i + 1) {
+    for(@j = 0, @j < array_size(@ap), @j = @j + 1) {
+      queue_push(closure() {
+        @location = pinfo(array_get(@ap, @j))[1]
+        @location[0] = @location[0] + rand(-20, 20)
+        @location[2] = @location[2] + rand(-20, 20)
+        @location[3] = pinfo(array_get(@ap, @j))[7]
+        launch_firework(@location, @options)
+      })
+    }
+    queue_delay(1000)
+  }
+<<<
+
+server.cake:/cake $1 = >>>
+  @players = all_players()
+  foreach(@player in @players) {
+    @id = pinfo(@player, 13)
+    @meta = array(
+      'display': 'Cake!',
+      'lore': 'From ' . $1
+    )
+    add_to_inventory(@id, 354, 1, @meta)
+  }
+<<<

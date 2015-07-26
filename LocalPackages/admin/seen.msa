@@ -1,0 +1,33 @@
+/*
+
+*:/seen [$player] = >>>
+  if ($player == '') {
+    msg(color(red).'Usage: /seen $player')
+    msg(color(red).'Tells you when the last time that player logged on')
+    die()
+  }
+
+  @playerName = strip_colors($player)
+  @lowerName = to_lower(@playerName)
+  @uuid = _get_puuid(@lowerName)
+  @key = 'lastseen.' . @uuid
+
+  if (has_value('correctPlayerName.' . @lowerName)) {
+    @displayName = get_value('correctPlayerName.' . @lowerName)
+  } else {
+    # Preserve colors in the player name when displaying.
+    @displayName = $player
+  }
+
+  if (has_value(@key)) {
+    @format = 'EEEE, MMMM d, kk:mm'
+    msg(color(gold).@displayName.' was last seen on '.simple_date(@format, get_value(@key)).'\n(The current time is: '.simple_date(@format).')')
+    if (ponline($player)) {
+      msg(color(gold).'Also, they are currently online.')
+    }
+  } else {
+    msg(color(gold).$player.' has not been seen before.')
+  }
+<<<
+
+*/

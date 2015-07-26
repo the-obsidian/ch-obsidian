@@ -1,0 +1,83 @@
+obsidian.admin:/drunk = set_peffect(player(), 9, 1, 30) msg(concat(color(gold), 'You been drinkin?'))
+*:/sniper = set_peffect(player(), 2, 10)
+*:/sober = set_peffect(player(), 9, 1, 0)
+
+obsidian.admin:/ra = /reloadaliases
+
+obsidian.admin:/fill [$qty=64] = >>>
+  @item = pinv(player(), null)
+  @item['qty'] = $qty
+  set_pinv(player(), array(null: @item))
+<<<
+
+*:/seen $p = >>>
+  @player = _fuzzy_find_player($p)
+
+  if (!@player) {
+    die(colorize('&cPlayer not found!'))
+  }
+
+  @time = plast_played(@player)
+  msg(@time)
+
+  if (@time == 0) {
+    die(colorize('&cThat player has not logged in yet.'))
+  }
+
+  @date = simple_date('MMMM d, YYYY, K:mm a, z', @time)
+
+  msg(colorize(@player . ' was last seen at ' . @date))
+<<<
+
+*:/wlreport = >>>
+  @whitelist = get_whitelisted_players()
+
+  @players = array()
+  @not_seen = array()
+  foreach(@p in @whitelist) {
+    @last = plast_played(@p)
+    if (@last == 0) {
+      @not_seen[] = @p
+    } else {
+      @players[] = array(name: @p, time: (time() - @last) / 1000 / 60 / 60 / 24)
+    }
+  }
+
+  array_sort(@players, closure(@left, @right) {
+    return (@left['time'] > @right['time'])
+  })
+
+  msg('Never seen:')
+  foreach (@p in @not_seen) {
+    msg('- '.@p)
+  }
+
+  msg('Seen:')
+  foreach (@p in @players) {
+    msg('- '.@p['name'].': '.@p['time'].' days')
+  }
+<<<
+
+
+obsidian.admin:/pinv $p = >>>
+  @player = _fuzzy_find_player($p)
+  if (!@player) {
+    die(colorize('&cPlayer not found'))
+  }
+
+  msg(get_inventory(pinfo(@player, 13)))
+<<<
+
+obsidian.admin:/skull [$name] = >>>
+  if ($name == '') {
+    msg(colorize('&cUsage: /skull $player'))
+    msg(colorize('&cThis works with offline players, but the name must be exact'))
+    die()
+  } else {
+    pgive_item(player(), '397:3', 1, array(owner: $name))
+  }
+<<<
+
+obsidian.admin:/pinv = >>>
+  msg(pinv())
+<<<

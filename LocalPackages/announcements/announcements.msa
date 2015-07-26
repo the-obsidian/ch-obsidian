@@ -1,0 +1,29 @@
+obsidian.admin:/announce = _display_announcements()
+
+obsidian.admin:/announce interval = >>>
+  @seconds = get_value('server.announcements.seconds')
+  if (!@seconds) {
+    @seconds = 200
+    store_value('server.announcements.seconds', @seconds)
+  }
+  msg(color(LIGHT_PURPLE).'Announcements are broadcast every '.@seconds.' seconds')
+<<<
+
+obsidian.admin:/announce interval $seconds = >>>
+  @minInterval = 30;
+  @seconds = $seconds;
+  if (! is_numeric(@seconds)) {
+    die(color(RED).'You must specify the interval in seconds as a number.');
+  }
+  if (@seconds < @minInterval) {
+    die(color(RED).'The interval must be at least '.@minInterval.' seconds.');
+  }
+
+  @seconds = integer(@seconds);
+  store_value('server.announcements.seconds', @seconds);
+  try(
+    clear_task(get_value('server.announcements.task'));
+  )
+  _start_announcements();
+  msg(color(LIGHT_PURPLE).'The announcement broadcast interval was set to '.@seconds.' seconds.');
+<<<
