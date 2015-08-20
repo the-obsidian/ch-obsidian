@@ -1,0 +1,7 @@
+*:/slimes = >>>
+  if (is_slime_chunk(ploc())) {
+    msg(colorize('&6This is a slime chunk'))
+  } else {
+    msg(colorize('&6This is not a slime chunk'))
+  }
+<<<

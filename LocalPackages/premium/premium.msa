@@ -1,5 +1,0 @@
-obsidian.premium.workbench:/workbench = pworkbench()
-/wb = /workbench
-
-obsidian.premium.backpack:/backpack = show_enderchest()
-/bp = /backpack

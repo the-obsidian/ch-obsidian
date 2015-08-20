@@ -1,0 +1,29 @@
+
+*:/wlreport = >>>
+  @whitelist = get_whitelisted_players()
+
+  @players = array()
+  @not_seen = array()
+  foreach(@p in @whitelist) {
+    @last = plast_played(@p)
+    if (@last == 0) {
+      @not_seen[] = @p
+    } else {
+      @players[] = array(name: @p, time: (time() - @last) / 1000 / 60 / 60 / 24)
+    }
+  }
+
+  array_sort(@players, closure(@left, @right) {
+    return (@left['time'] > @right['time'])
+  })
+
+  msg('Never seen:')
+  foreach (@p in @not_seen) {
+    msg('- '.@p)
+  }
+
+  msg('Seen:')
+  foreach (@p in @players) {
+    msg('- '.@p['name'].': '.@p['time'].' days')
+  }
+<<<

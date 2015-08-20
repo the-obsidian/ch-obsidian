@@ -1,0 +1,23 @@
+*:/seen $p = >>>
+  @player = _fuzzy_find_player($p)
+
+  if (!@player) {
+    die(colorize('&cPlayer not found!'))
+  }
+
+  @time = plast_played(@player)
+  msg(@time)
+
+  if (@time == 0) {
+    die(colorize('&cThat player has not logged in yet.'))
+  }
+
+  @date = simple_date('MMMM d, YYYY, K:mm a, z', @time)
+
+  msg(colorize(@player . ' was last seen at ' . @date))
+<<<
+
+*:/domod = >>>
+  _require_mod_mode()
+  msg('you have mod mode')
+<<<

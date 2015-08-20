@@ -1,0 +1,35 @@
+obsidian.mod:/spawn [$] = >>>
+  _require_mod_mode()
+  set_ploc(get_spawn())
+<<<
+
+obsidian.mod:/tp = >>>
+  msg(colorize('&bUsage: /tp PLAYER or /tp X Y Z [WORLD]'))
+<<<
+
+obsidian.mod:/tp $player = >>>
+  _require_mod_mode()
+  @player = _fuzzy_find_player_online($player)
+  if (!@player) {
+    msg(colorize('&cPlayer not found!'))
+  }
+  set_ploc(ploc(@player))
+<<<
+
+obsidian.mod:/tp $x $y $z [$world] = >>>
+  _require_mod_mode()
+  @location = array($x, $y, $z)
+  if ($world) {
+    @location[] = $world
+  }
+  set_ploc(@location)
+<<<
+
+obsidian.mod:/bring $player = >>>
+  _require_mod_mode()
+  @player = _fuzzy_find_player_online($player)
+  if (!@player) {
+    msg(colorize('&cPlayer not found!'))
+  }
+  set_ploc(@player, ploc())
+<<<

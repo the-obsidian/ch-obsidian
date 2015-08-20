@@ -1,0 +1,8 @@
+*:/whereami = >>>
+  @location = ploc()
+  @x = round(@location['x'], 0)
+  @y = round(@location['y'], 0)
+  @z = round(@location['z'], 0)
+  @world = _friendly_world_name(@location['world'])
+  msg(colorize('&aYou are at '.@x.' '.@y.' '.@z.' in '.@world))
+<<<

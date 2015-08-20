@@ -1,0 +1,12 @@
+obsidian.premium.workbench:/workbench = pworkbench()
+/wb = /workbench
+
+obsidian.premium.backpack:/backpack = >>>
+  if (pworld() == 'test_world') {
+    msg(colorize('&cBackpack is disabled in the Cleanroom!'))
+  } else {
+    show_enderchest()
+  }
+<<<
+
+/bp = /backpack

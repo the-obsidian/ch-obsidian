@@ -1,0 +1,12 @@
+obsidian.admin:/pinv = >>>
+  msg(pinv())
+<<<
+
+obsidian.admin:/pinv $p = >>>
+  @player = _fuzzy_find_player($p)
+  if (!@player) {
+    die(colorize('&cPlayer not found'))
+  }
+
+  msg(get_inventory(pinfo(@player, 13)))
+<<<

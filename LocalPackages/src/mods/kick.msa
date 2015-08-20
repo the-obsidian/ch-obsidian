@@ -1,0 +1,9 @@
+mods:/kick $player [$] = >>>
+  # We can add people who shouldn't be kickable here.
+  assign(@unkickable, array('jacobwg'))
+  if(array_contains(@unkickable, player($player))){
+    pkick(player(), 'NOPE')
+  } else {
+    run('/kick' $player $)
+  }
+<<<

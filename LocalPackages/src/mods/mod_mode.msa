@@ -1,0 +1,10 @@
+obsidian.mod:/mod = >>>
+  @player = player()
+  if (_toggle_mod_mode(@player)) {
+    #msg(colorize('&aYou are now in mod mode.'))
+    broadcast(colorize('&b'.@player.' has entered moderator mode'))
+  } else {
+    #msg(colorize('&bYou are no longer in mod mode.'))
+    broadcast(colorize('&a'.@player.' is no longer in moderator mode'))
+  }
+<<<
