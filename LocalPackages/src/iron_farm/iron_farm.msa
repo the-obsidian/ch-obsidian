@@ -1,0 +1,59 @@
+obsidian.admin:/ironfarm interval = >>>
+  @milliseconds = get_value('ironfarm.milliseconds')
+  if (!@milliseconds) {
+    @milliseconds = 200
+    store_value('ironfarm.milliseconds', @milliseconds)
+  }
+  msg(color(LIGHT_PURPLE).'Golems attempt to spawn every '.@milliseconds.' milliseconds')
+<<<
+
+obsidian.admin:/ironfarm interval $milliseconds = >>>
+  @minInterval = 200;
+  @milliseconds = $milliseconds;
+  if (! is_numeric(@milliseconds)) {
+    die(color(RED).'You must specify the interval in milliseconds as a number.');
+  }
+  if (@milliseconds < @minInterval) {
+    die(color(RED).'The interval must be at least '.@minInterval.' milliseconds.');
+  }
+
+  @milliseconds = integer(@milliseconds);
+  store_value('ironfarm.milliseconds', @milliseconds);
+  try(
+    clear_task(get_value('ironfarm.task'));
+  )
+  _start_iron_farm();
+  msg(color(LIGHT_PURPLE).'The spawn attempt interval was set to '.@milliseconds.' milliseconds.');
+<<<
+
+obsidian.admin:/ironfarm threshhold = >>>
+  @threshhold = get_value('ironfarm.threshhold')
+  if (!@threshhold) {
+    @threshhold = 0.2
+    store_value('ironfarm.threshhold', @threshhold)
+  }
+  msg(color(LIGHT_PURPLE).'Golems spawn threshhold is '.@threshhold)
+<<<
+
+obsidian.admin:/ironfarm threshhold $threshhold = >>>
+  @minThreshhold = 0;
+  @maxThreshhold = 1;
+  @threshhold = $threshhold;
+  if (! is_numeric(@threshhold)) {
+    die(color(RED).'You must specify the threshhold as a number.');
+  }
+  if (@threshhold < @minThreshhold) {
+    die(color(RED).'The threshhold must be at least '.@minInterval);
+  }
+  if (@threshhold > @maxThreshhold) {
+    die(color(RED).'The threshhold must be at least '.@minInterval);
+  }
+
+  @threshhold = double(@threshhold);
+  store_value('ironfarm.threshhold', @threshhold);
+  try(
+    clear_task(get_value('ironfarm.task'));
+  )
+  _start_iron_farm();
+  msg(color(LIGHT_PURPLE).'The spawn attempt threshhold was set to '.@threshhold);
+<<<
