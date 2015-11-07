@@ -16,10 +16,10 @@ proc(_start_announcements) {
 }
 
 proc(_display_announcements) {
-  # broadcast('')
-  # broadcast(colorize('&6Announcements:'))
-  # broadcast(colorize('  &3District 12: A Parallel World:'))
-  # broadcast(colorize('    &2http://forum.the-obsidian.com/t/t/102'))
+  broadcast('')
+  broadcast(colorize('&6Announcements:'))
+  broadcast(colorize('  &3Poll: Map Reset / Obsidian 2.0:'))
+  broadcast(colorize('    &2http://forum.the-obsidian.com/t/t/159/'))
   # broadcast(colorize('  &3Welcome New Guardians: Checkers300 and Monkeymad358:'))
   # broadcast(colorize('    &2http://forum.the-obsidian.com/t/t/103'))
   # broadcast(colorize('  &3Welcome New Guardian: d0ct0rwh00ves:'))

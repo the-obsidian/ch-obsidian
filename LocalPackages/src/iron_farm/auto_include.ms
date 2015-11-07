@@ -2,7 +2,7 @@ proc(_start_iron_farm) {
   clear_task(get_value('ironfarm.task'))
 
   @x_start = 914
-  @y_start = 147
+  @y_start = 149
   @z_start = 1057
   @x_end = 927
   @y_end = 157
